@@ -1,0 +1,85 @@
+\begin{thebibliography}{10}
+
+\bibitem{tamp-1}
+C.~Phiquepal and M.~Toussaint,
+  ``\href{https://ieeexplore.ieee.org/abstract/document/8793260}{Combined Task
+  and Motion Planning under Partial Observability: An Optimization-Based
+  Approach},'' pp.~9000--9006, 05 2019.
+
+\bibitem{control-tree-1}
+C.~Phiquepal and M.~Toussaint, ``Control-tree optimization: an approach to mpc
+  under discrete partial observability,'' {\em 2021 IEEE International
+  Conference on Robotics and Automation (ICRA)}, pp.~9666--9672, 2021.
+
+\bibitem{lavalle1998rapidly}
+S.~M. LaValle {\em et~al.}, ``Rapidly-exploring random trees: A new tool for
+  path planning,'' 1998.
+
+\bibitem{kavraki1996probabilistic}
+L.~E. Kavraki, P.~Svestka, J.-C. Latombe, and M.~H. Overmars, ``Probabilistic
+  roadmaps for path planning in high-dimensional configuration spaces,'' {\em
+  IEEE transactions on Robotics and Automation}, vol.~12, no.~4, pp.~566--580,
+  1996.
+
+\bibitem{prentice2010belief}
+S.~Prentice and N.~Roy, ``The belief roadmap: Efficient planning in linear
+  pomdps by factoring the covariance,'' in {\em Robotics research},
+  pp.~293--305, Springer, 2010.
+
+\bibitem{bry2011rapidly}
+A.~Bry and N.~Roy, ``Rapidly-exploring random belief trees for motion planning
+  under uncertainty,'' in {\em 2011 IEEE international conference on robotics
+  and automation}, pp.~723--730, IEEE, 2011.
+
+\bibitem{hollinger2014sampling}
+G.~A. Hollinger and G.~S. Sukhatme, ``Sampling-based robotic information
+  gathering algorithms,'' {\em The International Journal of Robotics Research},
+  vol.~33, no.~9, pp.~1271--1287, 2014.
+
+\bibitem{levine2010information}
+D.~Levine, B.~Luders, and J.~How, ``Information-rich path planning with general
+  constraints using rapidly-exploring random trees,'' in {\em AIAA Infotech@
+  Aerospace 2010}, p.~3360, 2010.
+
+\bibitem{dang2020graph}
+T.~Dang, M.~Tranzatto, S.~Khattak, F.~Mascarich, K.~Alexis, and M.~Hutter,
+  ``Graph-based subterranean exploration path planning using aerial and legged
+  robots,'' {\em Journal of Field Robotics}, vol.~37, no.~8, pp.~1363--1388,
+  2020.
+
+\bibitem{karaman2009sampling}
+S.~Karaman and E.~Frazzoli, ``Sampling-based motion planning with deterministic
+  $\mu$-calculus specifications,'' in {\em Proceedings of the 48h IEEE
+  Conference on Decision and Control (CDC) held jointly with 2009 28th Chinese
+  Control Conference}, pp.~2222--2229, IEEE, 2009.
+
+\bibitem{leahy2019control}
+K.~Leahy, E.~Cristofalo, C.-I. Vasile, A.~Jones, E.~Montijano, M.~Schwager, and
+  C.~Belta, ``Control in belief space with temporal logic specifications using
+  vision-based localization,'' {\em The International Journal of Robotics
+  Research}, vol.~38, no.~6, pp.~702--722, 2019.
+
+\bibitem{vasile2020reactive}
+C.~I. Vasile, X.~Li, and C.~Belta, ``Reactive sampling-based path planning with
+  temporal logic specifications,'' {\em The International Journal of Robotics
+  Research}, vol.~39, no.~8, pp.~1002--1028, 2020.
+
+\bibitem{Sniedovich2006DijkstrasAR}
+M.~Sniedovich, ``Dijkstra's algorithm revisited: the dynamic programming
+  connexion,'' {\em Control and Cybernetics}, vol.~35, pp.~599--620, 2006.
+
+\bibitem{geraerts2007creating}
+R.~Geraerts and M.~H. Overmars, ``Creating high-quality paths for motion
+  planning,'' {\em The international journal of robotics research}, vol.~26,
+  no.~8, pp.~845--863, 2007.
+
+\bibitem{matsakis2014rust}
+N.~D. Matsakis and F.~S. Klock~II, ``The rust language,'' in {\em ACM SIGAda
+  Ada Letters}, vol.~34, pp.~103--104, ACM, 2014.
+
+\bibitem{coleman2014reducing}
+D.~Coleman, I.~Sucan, S.~Chitta, and N.~Correll, ``Reducing the barrier to
+  entry of complex robotic software: a moveit! case study,'' {\em arXiv
+  preprint arXiv:1404.3785}, 2014.
+
+\end{thebibliography}

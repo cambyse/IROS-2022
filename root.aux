@@ -1,39 +1,117 @@
 \relax 
-\@writefile{toc}{\contentsline {section}{\numberline {I}INTRODUCTION}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {II}PROCEDURE FOR PAPER SUBMISSION}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Selecting a Template (Heading 2)}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {II-B}Maintaining the Integrity of the Specifications}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}MATH}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}Abbreviations and Acronyms}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Units}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Equations}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-D}Some Common Mistakes}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}USING THE TEMPLATE}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Headings, etc}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Figures and Tables}{2}}
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces An Example of a Table}}{2}}
-\newlabel{table_example}{{I}{2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Inductance of oscillation winding on amorphous magnetic core versus DC bias magnetic field}}{2}}
-\newlabel{figurelabel}{{1}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}CONCLUSIONS}{2}}
-\bibcite{c1}{1}
-\bibcite{c2}{2}
-\bibcite{c3}{3}
-\bibcite{c4}{4}
-\bibcite{c5}{5}
-\bibcite{c6}{6}
-\bibcite{c7}{7}
-\bibcite{c8}{8}
-\bibcite{c9}{9}
-\bibcite{c10}{10}
-\bibcite{c11}{11}
-\bibcite{c12}{12}
-\bibcite{c13}{13}
-\bibcite{c14}{14}
-\bibcite{c15}{15}
-\bibcite{c16}{16}
-\bibcite{c17}{17}
-\bibcite{c18}{18}
-\bibcite{c19}{19}
-\bibcite{c20}{20}
-\@writefile{toc}{\contentsline {section}{References}{3}}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{tamp-1}
+\citation{control-tree-1}
+\citation{tamp-1}
+\citation{lavalle1998rapidly}
+\citation{kavraki1996probabilistic}
+\citation{prentice2010belief}
+\citation{bry2011rapidly}
+\citation{hollinger2014sampling}
+\citation{levine2010information}
+\citation{dang2020graph}
+\citation{dang2020graph}
+\citation{karaman2009sampling}
+\citation{leahy2019control}
+\citation{vasile2020reactive}
+\citation{karaman2009sampling}
+\citation{vasile2020reactive}
+\citation{leahy2019control}
+\citation{prentice2010belief}
+\citation{bry2011rapidly}
+\@writefile{toc}{\contentsline {section}{\numberline {I}INTRODUCTION}{1}{section.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {II}RELATED WORK}{1}{section.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}PROBLEM FORMULATION}{1}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}State representation}{1}{subsection.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity. }}{2}{figure.1}}
+\newlabel{fig:problem}{{1}{2}{Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment.}}{2}{figure.2}}
+\newlabel{fig:multiple_worlds}{{2}{2}{Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Observation model}{2}{subsection.3.2}}
+\newlabel{sec:observation_model}{{III-B}{2}{Observation model}{subsection.3.2}{}}
+\newlabel{eq:baysian}{{1}{2}{Observation model}{equation.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Path-tree}{2}{subsection.3.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed).}}{2}{figure.3}}
+\newlabel{fig:path_tree}{{3}{2}{Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed)}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-D}State validity}{2}{subsection.3.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-E}State transitions validity and cost}{3}{subsection.3.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-F}Goal condition}{3}{subsection.3.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-G}Optimization Objective}{3}{subsection.3.7}}
+\newlabel{eq:optimization_objective}{{4}{3}{Optimization Objective}{equation.3.4}{}}
+\newlabel{eq:cost_min}{{4a}{3}{Optimization Objective}{equation.3.1}{}}
+\newlabel{eq:goal_constraint}{{4b}{3}{Optimization Objective}{equation.3.2}{}}
+\newlabel{eq:validity}{{4c}{3}{Optimization Objective}{equation.3.3}{}}
+\newlabel{eq:belief_dynamic}{{4d}{3}{Optimization Objective}{equation.3.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}ALGORITHM}{3}{section.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Overview}{3}{subsection.4.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Algorithm overview.}}{3}{figure.4}}
+\newlabel{algorithm_overview}{{4}{3}{Algorithm overview}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Interface between the algorithm and the appication layer}{3}{subsection.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Rapidly-exploring Random Graph}{3}{subsection.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Random Graph expansion: For a new sample \textit  {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit  {w}, see \textit  {a)} and \textit  {c}).}}{4}{figure.5}}
+\newlabel{fig:expansion}{{5}{4}{Random Graph expansion: For a new sample \textit {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit {w}, see \textit {a)} and \textit {c})}{figure.5}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rapidly-exploring Random Graph}}{4}{algorithm.1}}
+\newlabel{alg:rrg}{{1}{4}{Rapidly-exploring Random Graph}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Graph expansion to belief space}{4}{subsection.4.4}}
+\newlabel{section:graph_expansion_belief_space}{{IV-D}{4}{Graph expansion to belief space}{subsection.4.4}{}}
+\citation{Sniedovich2006DijkstrasAR}
+\citation{geraerts2007creating}
+\citation{matsakis2014rust}
+\citation{coleman2014reducing}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Randon Graph expanded to belief state: The belief states are represented as \textit  {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).}}{5}{figure.6}}
+\newlabel{fig:belief_layers}{{6}{5}{Randon Graph expanded to belief state: The belief states are represented as \textit {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges)}{figure.6}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Creation of the belief graph}}{5}{algorithm.2}}
+\newlabel{alg:belief}{{2}{5}{Graph expansion to belief space}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-E}Policy extraction}{5}{subsection.4.5}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Computation of the expected costs to goal}}{5}{algorithm.3}}
+\newlabel{alg:expected_costs}{{3}{5}{Policy extraction}{algorithm.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-F}Path-tree refinement}{5}{subsection.4.6}}
+\bibdata{references}
+\bibcite{tamp-1}{1}
+\bibcite{control-tree-1}{2}
+\bibcite{lavalle1998rapidly}{3}
+\bibcite{kavraki1996probabilistic}{4}
+\bibcite{prentice2010belief}{5}
+\bibcite{bry2011rapidly}{6}
+\bibcite{hollinger2014sampling}{7}
+\bibcite{levine2010information}{8}
+\bibcite{dang2020graph}{9}
+\bibcite{karaman2009sampling}{10}
+\bibcite{leahy2019control}{11}
+\bibcite{vasile2020reactive}{12}
+\@writefile{toc}{\contentsline {section}{\numberline {V}EXPERIMENTS}{6}{section.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-A}Mobile robot navigation}{6}{subsection.5.1}}
+\newlabel{experiement:navigation}{{V-A}{6}{Mobile robot navigation}{subsection.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Robot arm object fetching}{6}{subsection.5.2}}
+\newlabel{experiement:mobile_manipulation}{{V-B}{6}{Robot arm object fetching}{subsection.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves.}}{6}{figure.7}}
+\newlabel{fig:arm_example_1}{{7}{6}{Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Example 2: The block might be on two different shelves. The opening between thw two doors potentially allows the robot to observe the shelves without entering the rooms.}}{6}{figure.8}}
+\newlabel{fig:arm_example_2}{{8}{6}{Example 2: The block might be on two different shelves. The opening between thw two doors potentially allows the robot to observe the shelves without entering the rooms}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magent path.}}{6}{figure.9}}
+\newlabel{fig:example_2_view_point}{{9}{6}{Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magent path}{figure.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Planning times:.}}{6}{table.1}}
+\newlabel{tab:table_obstacle_avoidance}{{I}{6}{Planning times:}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}CONCLUSIONS AND FUTURE WORK}{6}{section.6}}
+\@writefile{toc}{\contentsline {section}{References}{6}{section*.2}}
+\bibcite{Sniedovich2006DijkstrasAR}{13}
+\bibcite{geraerts2007creating}{14}
+\bibcite{matsakis2014rust}{15}
+\bibcite{coleman2014reducing}{16}
+\bibstyle{ieeetr}

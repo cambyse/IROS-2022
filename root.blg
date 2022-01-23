@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: root.aux
+The style file: ieeetr.bst
+Database file #1: references.bib
+Warning--empty booktitle in tamp-1
+Warning--empty journal in lavalle1998rapidly
+Warning--empty publisher in levine2010information
+Warning--can't use both volume and number fields in matsakis2014rust
+You've used 16 entries,
+            1876 wiz_defined-function locations,
+            582 strings with 6663 characters,
+and the built_in function-call counts, 5362 in all, are:
+= -- 553
+> -- 169
+< -- 0
++ -- 62
+- -- 46
+* -- 366
+:= -- 703
+add.period$ -- 16
+call.type$ -- 16
+change.case$ -- 16
+chr.to.int$ -- 0
+cite$ -- 20
+duplicate$ -- 288
+empty$ -- 508
+format.name$ -- 46
+if$ -- 1333
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 16
+newline$ -- 51
+num.names$ -- 16
+pop$ -- 57
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 229
+stack$ -- 0
+substring$ -- 460
+swap$ -- 139
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 4
+while$ -- 53
+width$ -- 18
+write$ -- 160
+(There were 4 warnings)
