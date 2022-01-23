@@ -483,9 +483,15 @@ The observation model simulates that a sensor is placed on the robot gripper and
  \label{fig:arm_example_2}
 \end{figure}
 
-Planning is performed in joint space with 8 degrees of freedom (2 for the base, and 2 for the robot arm).
+Planning is performed in joint space with 9 degrees of freedom (2 for the base, and 7 for the robot arm).
 
 Figure XX shows the trajectory of the 
+
+\begin{figure}[!htb]
+ \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_1_path_tree.png}}
+ \caption{Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.}
+ \label{fig:example_1_path_tree}
+\end{figure}
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_2_viewpoint.png}}
