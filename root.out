@@ -8,7 +8,7 @@
 \BOOKMARK [2][-]{subsection.3.5}{State transitions validity and cost}{section.3}% 8
 \BOOKMARK [2][-]{subsection.3.6}{Goal condition}{section.3}% 9
 \BOOKMARK [2][-]{subsection.3.7}{Optimization Objective}{section.3}% 10
-\BOOKMARK [1][-]{section.4}{ALGORITHM}{}% 11
+\BOOKMARK [1][-]{section.4}{Random Optimal Path-Tree algorithm \(ROPT\)}{}% 11
 \BOOKMARK [2][-]{subsection.4.1}{Overview}{section.4}% 12
 \BOOKMARK [2][-]{subsection.4.2}{Interface between the algorithm and the appication layer}{section.4}% 13
 \BOOKMARK [2][-]{subsection.4.3}{Rapidly-exploring Random Graph}{section.4}% 14
