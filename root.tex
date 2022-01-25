@@ -252,7 +252,7 @@ To build a path-tree satisfying the specification of Equation \ref{eq:optimizati
 \node[myboxrectangle] (BS) [right =of RRG] {Graph expansion \\to Belief Space} edge [<-] (RRG);
 \node[myboxrectangle] (PO) [right =of BS] {Path-tree\\Extraction} edge [<-] (BS);
 \end{tikzpicture}
- \caption{ROPT Algorithm overview.}
+ \caption{ROPT Algorithm overview. It contains three main steps corresponding to the algorithms described in the sections \ref{section:rapidly-exploring-random-graph}, \ref{section:rapidly-exploring-random-graph} and \ref{section:policy-extraction}.}
  \label{algorithm_overview}
 \end{figure}
 
@@ -274,6 +274,8 @@ The \textsc{Observe} function is directly linked to partial observability and is
 The following sections detail how the calls to those functions are orchestrated by the algorithm to build a path-tree.
 
 \subsection{Rapidly-exploring Random Graph}
+\label{section:rapidly-exploring-random-graph}
+
 In this first step, a random-graph is grown in a sampling based fashion. To avoid the curse of dimensionality, sampling is not performed in belief-space directly but in the robot configuration space. The random graph is an intermediate representation and will be expanded to belief-state in a second step as described in the next section.
 
 The nodes of the random graph are associated with:
@@ -395,6 +397,7 @@ Second, the observation model is called via the function \textsc{OBSERVE} to ide
 The belief-graph $\mathcal{B}$ is significantly larger than the random graph $\mathcal{G}$ due to the different belief-states corresponding to one same robot configuration. However, its construction only calls the observation model (function \textsc{Observe}). In contrast, the random-graph is smaller but its creation requires calls the collision checks (\textsc{StateCheck} and \textsc{TransitionCheck}) as well as the nearest neighbor search that are expensive.
 
 \subsection{Policy extraction}
+\label{section:policy-extraction}
 
 At this stage, the belief-graph $\mathcal{B}$ is fully built, and it contains at least one path-tree satisfying the goal conditions (see \ref{eq:goal_constraint}). The goal is now to find the optimal path-tree by minimizing the expected costs to goal (see \ref{eq:cost_min}).
 
