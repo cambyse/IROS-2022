@@ -29,12 +29,13 @@
 Path-Tree planning using Rapidly-exploring Random Graphs for partially observable environments
 }
 
-\author{Camille Phiquepal$^{1}$, Andreas Orthey$^{2}$, Nicolas Viennot and Marc Toussaint$^{3}$
+\author{Camille Phiquepal$^{1}$, Andreas Orthey$^{2}$, Nicolas Viennot$^{3}$ and Marc Toussaint$^{4}$
 \thanks{$^{1}$Machine Learning \& Robotic Lab, University of Stuttgart, Germany
         {\tt\small camille.phiquepal@ipvs.uni-stuttgart.de}}
 \thanks{$^{2}$Real time robotics, Berlin, Germany
         {\tt\small aorthey@rtr.ai}}
-\thanks{$^{3}$Learning and Intelligent Systems Lab, TU Berlin, Germany
+\thanks{$^{3}${\tt\small nicolas.viennot@cs.columbia.edu}}
+\thanks{$^{4}$Learning and Intelligent Systems Lab, TU Berlin, Germany
         {\tt\small toussaint@tu-berlin.de}}
 }
 
@@ -50,7 +51,7 @@ Path-Tree planning using Rapidly-exploring Random Graphs for partially observabl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 This paper presents a new approach to path-planning for problems where essential and discrete aspects of the environment are partially observable.
-To achieve its task, the robot must be able to observe and infer knowledge about its environement.
+To achieve its task, the robot must be able to observe and infer knowledge about its environment.
 We introduce the ROPT (Random Optimal Path-Tree) algorithm which consists in planning a \textit{path-tree} in belief-space. Path-trees are tree-like motions with branching points where the robot receives an observation leading to a belief state update. The robot takes different branches depending on the observation received.
 The algorithm has three main steps. First, a rapidly-exploring random graph (RRG) is grown. The RRG is grown similarly to RRT methods but has a graph structure. Second, the RRG is expanded to belief space by querying the observation model. In a third step, dynamic programing is performed on the belief space graph to extract a path-tree. The resulting path-tree combines exploration with exploitation i.e.\ it balances the need for gaining knowledge about the environment with the need for reaching the goal. We demonstrate the capabilities of the approach on navigation and mobile manipulation tasks.
 % domain agnostic way
@@ -68,9 +69,9 @@ The algorithm has three main steps. First, a rapidly-exploring random graph (RRG
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-In the field of path-planning, the environment is often assumed to be fully known. Partial observability, when considered, is often modelled as a limited and continuous variation around a central hypothesis  (e.g. addition of potential fields around obstacles, description of the robot localization uncertainty with gaussians). Planning itself is achieved using one single world representation.
+In the field of path-planning, the environment is often assumed to be fully known. Partial observability, when considered, is often modeled as a limited and continuous variation around a central hypothesis  (e.g. addition of potential fields around obstacles, description of the robot localization uncertainty with gaussians). Planning itself is achieved using one single world representation.
 
-In contrast, our approach aims to plan motions for problems where the robot knowledge about its environment is \textit{multi-modal}: The robot has a countable number of hypotheses about its environment. In practice, this can model obstructions in the environment the (see section \ref{experiement:navigation}), or the uncertainty about an object location (see section \ref{experiement:mobile_manipulation}), or any other uncertainty well represented as a discrete set of hypotheses.
+In contrast, our approach aims to plan motions for problems where the robot knowledge about its environment is \textit{multi-modal}: The robot has a countable number of hypotheses about its environment. In practice, this can model obstructions in the environment the (see section\ref{experiment:navigation}), or the uncertainty about an object location (see section \ref{experiment:mobile_manipulation}), or any other uncertainty well represented as a discrete set of hypotheses.
 
 This paper extends previous research work \cite{tamp-1}\cite{control-tree-1} which develop optimization based-methods for trajectory-tree planning in the respective subfields of Task and Motion Planning (TAMP) and Model Predictive Control (MPC). It extends the concept of tree-like motions to sampling-based path planning, and leverages the strengths of sampling-based approaches (especially the strong guarantees regarding collision avoidance and the asymptotic completeness) to tackle problems where the high number of occluding obstacles would be challenging for pure optimization-based methods (e.g. due to a high number of local minima). %environement complexity, environement structure, instead of occluding obstacles?
 In addition, unlike \cite{tamp-1}, in which the observation actions are planned at the task level, the presented approach incorporates the observation model and the belief-state inference on the motion planning level directly, leading to unified algorithm.
@@ -93,16 +94,16 @@ In addition, unlike \cite{tamp-1}, in which the observation actions are planned 
 Path planning under partial observability and multi-modality of the environment state is related to the broader topic of path-planning under uncertainty for which many adaptations of classical sampling-based path planning algorithms like RRT \cite{lavalle1998rapidly} and PRM \cite{kavraki1996probabilistic} have been developed.
 
 % use case: localization
-One group such algorithms aims to tacke the localization uncertainty by planning paths which not only reach a goal but also minimize the localization uncertainty \cite{prentice2010belief} \cite{bry2011rapidly}. Like the presented approach, those algorithms plan in belief space on a grah grown in a sampling-based fashion. An observation model is used to infer the belief state dynamic. However, unlike the presented approach, those research model partial-observability over continuous variables (the localization), and assume gaussian belief-states. In addition we plan reactive path-trees reacting to the different possible observations.
+One group such algorithms aims to tackle the localization uncertainty by planning paths which not only reach a goal but also minimize the localization uncertainty \cite{prentice2010belief} \cite{bry2011rapidly}. Like the presented approach, those algorithms plan in belief space on a graph grown in a sampling-based fashion. An observation model is used to infer the belief state dynamic. However, unlike the presented approach, those research model partial-observability over continuous variables (the localization), and assume gaussian belief-states. In addition we plan reactive path-trees reacting to the different possible observations.
 
 % use case: mapping
-Another closely related line of work plans paths maximizing the information gathered along the path \cite{hollinger2014sampling} \cite{levine2010information} \cite{dang2020graph}. Like the previously mentioned work, a graph or tree is grown in a sampling-based fashion. However, instead of planning in belief space, those approches determine the optimal traversal w.r.t. an information objective, e.g. volumetric gain for the use case of mapping in \cite{dang2020graph}.
+Another closely related line of work plans paths maximizing the information gathered along the path \cite{hollinger2014sampling} \cite{levine2010information} \cite{dang2020graph}. Like the previously mentioned work, a graph or tree is grown in a sampling-based fashion. However, instead of planning in belief space, those approaches determine the optimal traversal w.r.t. an information objective, e.g. volumetric gain for the use case of mapping in \cite{dang2020graph}.
 
 
 % One line of work can be qualified as "observation-aware" algorithms where an observation model is used to
 %The modeled uncertainty is typically the localization (either of the robot or of the obstacles). 
 % use case: monitoring
-Another direction of research uses sampling based methods for planning problems where the goal is expressed as a temporal logic specification \cite{karaman2009sampling} \cite{leahy2019control} \cite{vasile2020reactive}. Like the method of this paper, the ouput solution of the planning problem is more general than a sequence of states. In \cite{karaman2009sampling} \cite{vasile2020reactive}, the solutions are cyclic infinite paths. The closest to our proposed approach is \cite{leahy2019control}. It synthetizes control policies in belief space that react to observations. The goal is specified using GDTL (Gaussian Distribution Temporal Logic). Like the other belief space planning approaches previously mentionned (\cite{prentice2010belief} \cite{bry2011rapidly}), the considered uncertainty is over the robot localization, and belief states are modeled as gaussians. Kalman filters are used for the belief states update. In contrast, the presented approach focuses on the environment uncertainty, it doesn't assume gaussian beliefs but describes the environment uncertainty as a finite and countable set of hypotheses.
+Another direction of research uses sampling based methods for planning problems where the goal is expressed as a temporal logic specification \cite{karaman2009sampling} \cite{leahy2019control} \cite{vasile2020reactive}. Like the method of this paper, the output solution of the planning problem is more general than a sequence of states. In \cite{karaman2009sampling} \cite{vasile2020reactive}, the solutions are cyclic infinite paths. The closest to our proposed approach is \cite{leahy2019control}. It synthesizes control policies in belief space that react to observations. The goal is specified using GDTL (Gaussian Distribution Temporal Logic). Like the other belief space planning approaches previously mentioned (\cite{prentice2010belief} \cite{bry2011rapidly}), the considered uncertainty is over the robot localization, and belief states are modeled as gaussians. Kalman filters are used for the belief states update. In contrast, the presented approach focuses on the environment uncertainty, it doesn't assume gaussian beliefs but describes the environment uncertainty as a finite and countable set of hypotheses.
 % extension of the GDTL
 % transition system in belief space
 % localization 
@@ -143,9 +144,9 @@ Another direction of research uses sampling based methods for planning problems 
 \subsection{State representation}
 We optimize policies in a context of mixed-observability. The robot state is fully observable, but discrete and essential parts of the environment are only partially observed. In the example of the Figure \ref{fig:problem} this models the fact that each door can be open or closed.
  
-To capture this mixed-observabiltiy structure, we adopt a compound state representation where a state is composed of 2 parts:
+To capture this mixed-observability structure, we adopt a compound state representation where a state is composed of 2 parts:
 \begin{itemize}
-\item $x \in \mathbb{R}^n$ is a continuous state and corresponds to the usual notion of state in the path planning litterature.
+\item $x \in \mathbb{R}^n$ is a continuous state and corresponds to the usual notion of state in the path planning literature.
 \item $s \in \mathcal{H}$ is a discrete state from a finite set of world hypotheses $\mathcal{H}$.
 \end{itemize}
 
@@ -164,7 +165,8 @@ Planning is performed is belief space, a belief state $b$ is a probability distr
 \subsection{Path-tree}
 The algorithm consists in planning path-trees. As schematically shown on Figure \ref{fig:path_tree}, the path-tree starts from a single root node and finishes with leaf nodes satisfying the goal condition. The path-tree branches where the robot receives an observation leading to a belief state update. The different branches of the path-tree are the different planned contingencies. To be complete, a path-tree must have a path going to the goal region for all $s \in \mathcal{H}$.
 
-A consequence of the binarity of the observation model (see Section \ref{sec:observation_model}) is that the number of branchings $N_o$ stays small compared to the total number of states $N$ on the path-tree. In other words $N_o \ll N$. It can be understood easily on the presented example: once an observation has been received for a door, the agent knows with certainty if the door is open or not, such that the next observations of the same door don't lead to an update of the belief-state.
+In addition, we assume the observation model to be binary, meaning that $p(s|o) \in \{0.0, 1.0\}, \forall s \in \mathcal{H}, \forall o \in O$, where $o$ is an observation from the observation space $O$. This property is important. It guarantees that the number of belief-states is finite and can be enumerated which is needed for
+the graph expansion to belief state presented in \ref{section:graph_expansion_belief_space}. For the example of Figure \ref{fig:problem}, it means that observations indicate whether the door is open or not without uncertainty. In addition, it typically implies that the number of branchings $N_o$ stays small compared to the total number of states $N$ on the path-tree. In other words $N_o \ll N$. It can be understood easily on the presented example: once an observation has been received for a door, the agent knows with certainty if the door is open or not, such that the next observations of the same door don't lead to an update of the belief-state.
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.25\textwidth]{drawings/path_tree_example.pdf}}
@@ -173,7 +175,7 @@ A consequence of the binarity of the observation model (see Section \ref{sec:obs
 \end{figure}
 
 \subsection{Optimization objective}
-We note $\psi$ a path tree, and $(u, v)$ consecutive nodes on the tree $\psi$. The motion costs between two nodes $u$ and $v$ is given by a cost function $C(u, v)$. In addition, we note $p(u | \psi, b_0)$ the probability to reach a node $v$. This probability depends on the initial belief state $b_0$ and the observation model. 
+We note $\psi$ a path tree, and $(u, v)$ consecutive nodes on the tree $\psi$. The motion cost between two nodes $u$ and $v$ is given by a cost function $C(u, v)$. In addition, we note $p(u | \psi, b_0)$ the probability to reach a node $v$. This probability depends on the initial belief state $b_0$ and the observation model. 
 
 In the presence of uncertainty we minimize the expectation of the motion costs, such that the partially-observable multi-modal planning problem is defined as follows.
 \begin{subequations}
@@ -186,13 +188,13 @@ In the presence of uncertainty we minimize the expectation of the motion costs, 
 &b_v(s) = p(s | o) \times b_u(s), \forall s \in \mathcal{H}, \forall (u, o, v) \in \psi, \label{eq:belief_dynamic}
 \end{align}
 \end{subequations}
-where the $\mathcal{L}(\psi)$ gives the leaf nodes of $\psi$, and $G(l)$ is the goal predicate, indicating whether a node fulfills the goal conditions. \ref{eq:goal_constraint} states that $\psi$ shall be complete i.e. there is a leaf satisfying the goal conditions for each possible $s$.
+where the $\mathcal{L}(\psi)$ gives the leaf nodes of $\psi$, and $G(l)$ is the goal predicate, indicating whether a node fulfills the goal conditions. \ref{eq:goal_constraint} states that $\psi$ shall be complete i.e. there is a leaf node satisfying the goal conditions for each possible $s$.
 
-The constraints \ref{eq:validity} expresses that $\psi$ shall be composed of feasible motions (e.g. collision free, feasible given the robot motion model), and $\mathcal{V}(u, v)$ is the predicate encoding the validity of the transition betwen $u$ and $v$.
+The constraint \ref{eq:validity} expresses that $\psi$ shall be composed of feasible motions (e.g. collision free, feasible given the robot motion model), and $\mathcal{V}(u, v)$ is the predicate encoding the validity of the transition between $u$ and $v$.
 
-Finaly, the constraint \ref{eq:belief_dynamic} corresponds to the baysian updates according to the observation model. The symbol $o$ is the observation received when transitioning from $u$ to $v$. $b_v$ is the belief state of the node $v$. And $p(s|o)$ is the observation model.
+Finally, the constraint \ref{eq:belief_dynamic} corresponds to the bayesian updates according to the observation model. The symbol $o$ is the observation received when transitioning from $u$ to $v$. The belief state of the node $v$ is noted $b_v$, and $p(s|o)$ is the observation model.
 
-It is noteworthy, that the problem formulation doesn't contain any term explicitely inciting the robot to explore its environment. The balance exploration / exploitation emerges naturally as a result of the minimization of the expected motion costs.
+It is noteworthy, that the problem formulation doesn't contain any term explicitly inciting the robot to explore its environment. The balance exploration / exploitation emerges naturally as a result of the minimization of the expected motion costs.
 % difference compared to general POMDP
 
 \section{Random Optimal Path-Tree algorithm (ROPT)}
@@ -212,7 +214,7 @@ To build a path-tree satisfying the specification of Equation \ref{eq:optimizati
  \label{algorithm_overview}
 \end{figure}
 
-\subsection{Interface between the algorithm and the appication layer}
+\subsection{Interface between the algorithm and the application layer}
 
 The connection between the core of the algorithm and a given planning problem is achieved via 4 functions that the application layer provides: 
 \begin{itemize}
@@ -224,7 +226,7 @@ The connection between the core of the algorithm and a given planning problem is
 
 The functions \textsc{StateCheck}, \textsc{TransitionCheck} and \textsc{GoalCheck} are akin to the functions required by the RRT and PRM algorithms, but they are more general: the return type is a list of worlds instead of a boolean.
 
-The \textsc{Observe} function is directly linked to partial observability and is specific to this algorithm. It allows belief-state inference. Going back to the example of Figure \ref{fig:problem}, \textsc{Observe} returns an unchanged belief-state for all robot configurations that are outside of the door visibility zone, this is because no observation can be received, and therefore no belief state inference is done. On the other hand, up to two possible belief-states are returned for robot configurations inside the door visibility zone. These two belief states correspond to the updated belief-states (see Section \ref{sec:observation_model}) for the two possible observations.
+The \textsc{Observe} function is directly linked to partial observability and is specific to this algorithm. It allows belief-state inference. Going back to the example of Figure \ref{fig:problem}, \textsc{Observe} returns an unchanged belief-state for all robot configurations that are outside of the door visibility zone, this is because no observation can be received, and therefore no belief state inference is done. On the other hand, up to two possible belief-states are returned for robot configurations inside the door visibility zone. These two belief states correspond to the updated belief-states for the two possible observations.
 %It must be noted that the observations are not explicitely handled by the algorithm
 
 The following sections detail how the calls to those functions are orchestrated by the algorithm to build a path-tree.
@@ -249,7 +251,7 @@ The edges of the random graph are associated with:
 
 % Sampling takes place in the state-space: the continuous robot configuration $x$ and the discrete state $s$ are sampled. Although planning will ultimately be performed in belief-space, the sampling at this stage is done in the state-space to avoid the curse of dimensionality. The random graph will be expanded to belief-state in a second step (see Section \ref{section:graph_expansion_belief_space}).
 
-The random-graph creation is described in Algorithm \ref{alg:rrg}. First, the state is sampled (lines 4). Then the new state is steered from a neighbor node of the graph (line 7). Unlike RRT where the new state is state is steered from the nearest neighbor, here, the selected neigbhor is the nearest neighbor having world validities $\mathcal{W}$ containind the sampled world $w$ (line 5), as illustrated on Figure \ref{fig:expansion}. This additional condition for the neighbor selection is to ensure that the random graph contains paths to the goal for each world.
+The random-graph creation is described in Algorithm \ref{alg:rrg}. First, the state is sampled (lines 4). Then the new state is steered from a neighbor node of the graph (line 7). Unlike RRT where the new state is state is steered from the nearest neighbor, here, the selected neighbor is the nearest neighbor having world validities $\mathcal{W}$ containing the sampled world $w$ (line 5), as illustrated on Figure \ref{fig:expansion}. This additional condition for the neighbor selection is to ensure that the random graph contains paths to the goal for each world.
 % similar to RRT / RRG quote RRG. The graph creation is done 
  
 %The challenge is to efficiently grow a graph until completeness, i.e.\ up to a point guaranteeing that the next steps of the algorithm will be sucessfull (belief graph creation, path-tree extraction).
@@ -268,7 +270,7 @@ If the new state is valid for at least one world (line 9), the goal conditions a
 
 Finally, the new node is connected to neighboring nodes (lines 13 to 16). The neighboring nodes are nodes within a given radius and which have world validities containing $w$.
 
-This procedure is repeated until the graph is complete meaning that it will allow the sucessful extraction of a solution path-tree (see line 3). To implement the function \textsc{IsComplete} we assume in our examples that the transitions are \text-it{symmetrical}, i.e. if a motion exists from a node $u$ to $v$, then a motion between $v$ and $u$ also exists. Under this assumption, the random-graph contains a solution path-tree as soon as the set of leaf nodes is complete, in the sense that it covers every possible world, i.e.  $\bigcup_{u \in \mathcal{\mathcal{L}(G)}} \mathcal{F}_u = \mathcal{H}$. Indeed, the fact that the set of leaf nodes is complete implies that for each possible world $\forall s \in \mathcal{H}$, a path from the root to a leaf exists. An example of solution is therefore to execute those paths in sequence, and  potentially \textit{backtrack} to the root node if a path doesn't reach the goal (hence the required assumption regarding the symmetrical transition). In practice, once the completeness threshold is reached, a solution can be extracted which is typically way more optimal than the aforementioned worst-case backtracking strategy. In pratice we also typically introduce a minimum number of iterations, to make sure that the random-graph is expanded even beyond the completeness threshold to improve the quality of the path-trees. The assumption of symmetric transitions is fair for the examples considered in the experimental section, it could however be restrictive in the case of kinodynamic planning. %we inten in future work to... 
+This procedure is repeated until the graph is complete meaning that it will allow the successful extraction of a solution path-tree (see line 3). To implement the function \textsc{IsComplete} we assume in our examples that the transitions are \text-it{symmetrical}, i.e. if a motion exists from a node $u$ to $v$, then a motion between $v$ and $u$ also exists. Under this assumption, the random-graph contains a solution path-tree as soon as the set of leaf nodes is complete, in the sense that it covers every possible world, i.e.  $\bigcup_{u \in \mathcal{\mathcal{L}(G)}} \mathcal{F}_u = \mathcal{H}$. Indeed, the fact that the set of leaf nodes is complete implies that for each possible world $\forall s \in \mathcal{H}$, a path from the root to a leaf exists. An example of solution is therefore to execute those paths in sequence, and  potentially \textit{backtrack} to the root node if a path doesn't reach the goal (hence the required assumption regarding the symmetrical transition). In practice, once the completeness threshold is reached, a solution can be extracted which is typically way more optimal than the aforementioned worst-case backtracking strategy. In practice we also typically introduce a minimum number of iterations, to make sure that the random-graph is expanded even beyond the completeness threshold to improve the quality of the path-trees. The assumption of symmetric transitions is fair for the examples considered in the experimental section, it could however be restrictive in the case of kinodynamic planning. %we inten in future work to... 
 
 \begin{algorithm}[H]
 \caption{Rapidly-exploring Random Graph}
@@ -304,20 +306,20 @@ This procedure is repeated until the graph is complete meaning that it will allo
 %doesn't contain any geometric checks anymore, or calls to nearest-neighbors
 %figure with several layers
 At this stage, a random-graph $\mathcal{G}$ has been built, and the existence of a path-tree solution is guaranteed, however the random-graph is still intermediate representation that can't be used directly to optimize path-trees. In this step, a transition system in belief-space, or belief-graph $\mathcal{B}$ is constructed out of $\mathcal{G}$ and by querying the observation model. 
-The nodes of the beief-graph are associated with:
+The nodes of the belief-graph are associated with:
 \begin{itemize}
 \item a robot-configuration $x$.
 \item a belief-state $b$.
 \end{itemize}
 The edges of the belief-graph are associated with:
 \begin{itemize}
-\item the observation $o$ making the transition betwen the beliefs on the incoming and outcoming nodes.
+\item the observation $o$ making the transition between the beliefs on the incoming and out-coming nodes.
 \end{itemize}
 The belief-graph can be understood as the random-graph replicated over several layers, where each layer is a different belief-state, as shown on Figure \ref{fig:belief_layers}. The transitions within on layer correspond to robot motions, whereas the transitions from one layer to another correspond to the integration of an observation leading to a belief-state update. The motion transitions are, in general, not identical across belief-states. For example, on Figure \ref{fig:belief_layers}, the transitions crossing through the doors exist only in beliefs compatible with an open door.
   
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/belief_graph.pdf}}
- \caption{Randon Graph expanded to belief state: The belief states are represented as \textit{layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).}
+ \caption{Random Graph expanded to belief state: The belief states are represented as \textit{layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).}
  \label{fig:belief_layers}
 \end{figure}
 
@@ -380,7 +382,7 @@ The algorithm is similar to the Dijkstra algorithm \cite{Sniedovich2006Dijkstras
 	\While{$\neg$ \Call{IsEmpty}{$Q$}}
 		\State $v \gets$ \Call{Pop}{$Q$}
 		\For {$u \in$ \Call{Parents}{$v$}}
-			\State \textcolor{cyan}{\footnotesize/*Bellman update dependant on the edge type*/}
+			\State \textcolor{cyan}{\footnotesize/*Bellman update dependent on the edge type*/}
 			\If{\Call{IsActionEdge}{$u, v$}}
 				\State $c \gets$ \Call{Cost}{$u$}$+ C[v]$
 			\ElsIf{\Call{IsObservationEdge}{$u, v$}}
@@ -397,14 +399,14 @@ The algorithm is similar to the Dijkstra algorithm \cite{Sniedovich2006Dijkstras
 \end{algorithmic}
 \end{algorithm}
 
-Once the expected costs to goal are known for ech node, the optimal path-tree can be built straighforwardly starting from the root and recursively appending the best next child, or next best children (in case of a node with an observation branching).
+Once the expected costs to goal are known for each node, the optimal path-tree can be built straightforwardly starting from the root and recursively appending the best next child, or next best children (in case of a node with an observation branching).
 
 Optimizing w.r.t. the expected costs to goal naturally results in an exploration vs. exploitation trade-off, i.e. path-trees balance the need for moving towards configurations  providing informative observations vs. the need to advance towards the goal.
 %balance exploration and exploitation
 
 \subsection{Path-tree refinement}
 %partial shortcut on trajectory pieces%
-At this stage, a solution path-tree has already been extracted. However path-trees may contain  unnatural or jerky motions due to the random nature of the random-graph creation. One way to reduce this phenomenon is to have a high minimal number of iterations when creating the random-graph. However, this can become quite costy in terms of runtime. In practice, it is also very fast and efficient to improve the path-tree in a final refinment step. We refine the path-tree piecewise: the path-pieces between observation branchings are refined independently using the partial-shortcut method \cite{geraerts2007creating}. The branching nodes corresponding to observations are extremities of the path pieces and they form the junctions between path pieces. Those nodes are not modified by the refinement procedure. 
+At this stage, a solution path-tree has already been extracted. However path-trees may contain  unnatural or jerky motions due to the random nature of the random-graph creation. One way to reduce this phenomenon is to have a high minimal number of iterations when creating the random-graph. However, this can become quite costly in terms of runtime. In practice, it is also very fast and efficient to improve the path-tree in a final refinement step. We refine the path-tree piecewise: the path-pieces between observation branchings are refined independently using the partial-shortcut method \cite{geraerts2007creating}. The branching nodes corresponding to observations are extremities of the path pieces and they form the junctions between path pieces. Those nodes are not modified by the refinement procedure. 
 
 %Obtaining near-optimal observation points therfore relies on having  
 %\subsection{Complexity analysis} -> keep for Phd
@@ -415,13 +417,16 @@ At this stage, a solution path-tree has already been extracted. However path-tre
 %w.r.t. the number of beliefs
 % different problems lead to different relation n_world <-> n_beliefs
 
+\subsection{Completeness and optimality}
+
+
 \section{EXPERIMENTS}
 The path-planner core algorithm is implemented in the Rust programming language \cite{matsakis2014rust}. The application layer is implemented in C++ using MoveIt \cite{coleman2014reducing}. The source code and a supplementary video are available for reference \footnotemark \footnotetext{\href{https://github.com/cambyse/po-rrt}{https://github.com/cambyse/po-rrt}}. %TODO put real url
 
-\subsection{Mobile robot navigation} \label{experiement:navigation}
+\subsection{Mobile robot navigation} \label{experiment:navigation}
 
-\subsection{Robot arm object fetching} \label{experiement:mobile_manipulation}
-In these two examples, the robot is composed of a Panda arm mounted on a mobile base. The robot task is to pick-up an object which location is unknow (see Figure \ref{fig:arm_example_1} and \ref{fig:arm_example_2}). The robot has prior knowledge of several potential locations, but the actual location is unknown at planning time. 
+\subsection{Robot arm object fetching} \label{experiment:mobile_manipulation}
+In these two examples, the robot is composed of a Panda arm mounted on a mobile base. The robot task is to pick-up an object which location is unknown (see Figure \ref{fig:arm_example_1} and \ref{fig:arm_example_2}). The robot has prior knowledge of several potential locations, but the actual location is unknown at planning time. 
 
 %. In other words, the perception pipeline will detect the object if the object is within the filed of view, at a distance closer than 2 meters from the sensor, and that the object is not occluded (e.g. by the walls).
 
@@ -439,13 +444,13 @@ The observation model simulates that a sensor is placed on the robot gripper and
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_2.png}}
- \caption{Example 2: The block might be on two different shelves. The opening between thw two doors potentially allows the robot to observe the shelves without entering the rooms.}
+ \caption{Example 2: The block might be on two different shelves. The opening between the two doors potentially allows the robot to observe the shelves without entering the rooms.}
  \label{fig:arm_example_2}
 \end{figure}
 
 Planning is performed in joint space with 9 degrees of freedom (2 for the base, and 7 for the robot arm).
 
-Figure XX shows the trajectory of the 
+Figure \ref{fig:example_2_view_point} shows the trajectory of the robot base along the path tree. There are two observation branching points corresponding to the observations of the shelves 0 an 1.
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_1_path_tree.png}}
@@ -455,7 +460,7 @@ Figure XX shows the trajectory of the
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_2_viewpoint.png}}
- \caption{Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magent path.}
+ \caption{Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magenta path.}
  \label{fig:example_2_view_point}
 \end{figure}
 
