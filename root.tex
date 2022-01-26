@@ -141,11 +141,11 @@ Another direction of research uses sampling based methods for planning problems 
 \end{figure}
 
 \subsection{State representation}
-The presented approach optimizes policies in a context of mixed-observability. The robot state is fully observable. On the other hand, discrete and essential parts of the environment are only partially observed. In the example of the Figure \ref{fig:problem} this models the fact that each door can be open or closed.
+We optimize policies in a context of mixed-observability. The robot state is fully observable, but discrete and essential parts of the environment are only partially observed. In the example of the Figure \ref{fig:problem} this models the fact that each door can be open or closed.
  
-We consider a compound state representation where a state is composed of 2 parts:
+To capture this mixed-observabiltiy structure, we adopt a compound state representation where a state is composed of 2 parts:
 \begin{itemize}
-\item $x \in \mathbb{R}^n$ : is a continuous state and corresponds to the usual notion of state in the path planning litterature.
+\item $x \in \mathbb{R}^n$ is a continuous state and corresponds to the usual notion of state in the path planning litterature.
 \item $s \in \mathcal{H}$ is a discrete state from a finite set of world hypotheses $\mathcal{H}$.
 \end{itemize}
 
@@ -157,21 +157,12 @@ In the problem introduced on Figure \ref{fig:problem} the variable $s$ can take 
  \label{fig:multiple_worlds}
 \end{figure}
 
+The robot is not oblivious about the likelihood of each state hypothesis. On the problem introduced on Figure \ref{fig:problem}, when the robot is in the vicinity of a door (symbolized with the circles), it receives an observation indicating whether the door is open or not.
+
 Planning is performed is belief space, a belief state $b$ is a probability distribution over the different possible state hypotheses.
 
-\subsection{Observation model}
-\label{sec:observation_model}
-The robot is not oblivious about the likelihood of each state hypothesis. For example, for the problem introduced on Figure \ref{fig:problem}, when the robot is in the vicinity of a door (symbolized with the circles), it receives an observation indicating whether the door is open or not. When an observation $o \in O$ is received, the belief state $b$ is updated according to a baysian update:
-\begin{equation}
-\label{eq:baysian}
-b^\prime(s) = p(s | o) \times b(s), \forall s \in \mathcal{H},
-\end{equation}
-where $p(s | o)$ is the probability of being in state $s$ after receiving the observation $o$. 
-
-In addition, we assume the observation model to be binary, meaning that $p(s | o) \in \{0.0, 1.0\}, \forall s \in \mathcal{H}, \forall o \in O$. This property is important. It guarantees that the number of belief-states is finite and can be ennumerated, which is needed for the graph expansion to belief state presented in Section \ref{section:graph_expansion_belief_space}. For the example of Figure \ref{fig:problem}, it means that observations indicate whether the door is open or not without uncertainty.
-
 \subsection{Path-tree}
-The algorithm consists in planning path-trees. As schematically shown on Figure \ref{fig:path_tree}, the path-tree starts from a single root node and finishes with leaf nodes satisfying the goal condition. The path-tree branches where the robot receives an observation leading to a belief state update. The different branches of the path-tree represent the different planned contingencies. To be complete, a path-tree must have a path going to the goal region for all $s \in \mathcal{H}$.
+The algorithm consists in planning path-trees. As schematically shown on Figure \ref{fig:path_tree}, the path-tree starts from a single root node and finishes with leaf nodes satisfying the goal condition. The path-tree branches where the robot receives an observation leading to a belief state update. The different branches of the path-tree are the different planned contingencies. To be complete, a path-tree must have a path going to the goal region for all $s \in \mathcal{H}$.
 
 A consequence of the binarity of the observation model (see Section \ref{sec:observation_model}) is that the number of branchings $N_o$ stays small compared to the total number of states $N$ on the path-tree. In other words $N_o \ll N$. It can be understood easily on the presented example: once an observation has been received for a door, the agent knows with certainty if the door is open or not, such that the next observations of the same door don't lead to an update of the belief-state.
 
@@ -181,49 +172,10 @@ A consequence of the binarity of the observation model (see Section \ref{sec:obs
  \label{fig:path_tree}
 \end{figure}
 
-We note a path-tree $\psi$. Nodes are composed of:
-\begin{itemize}
-\item a robot configuration $x$.
-\item a belief state $b$ which corresponds to the knowledge of the robot regarding the discrete state $s$.
-\end{itemize}
+\subsection{Optimization objective}
+We note $\psi$ a path tree, and $(u, v)$ consecutive nodes on the tree $\psi$. The motion costs between two nodes $u$ and $v$ is given by a cost function $C(u, v)$. In addition, we note $p(u | \psi, b_0)$ the probability to reach a node $v$. This probability depends on the initial belief state $b_0$ and the observation model. 
 
-Edges are composed of:
-\begin{itemize}
-\item the observation $o$ which connects the belief states edge's incoming and outcoming nodes according to the update rule \ref{eq:baysian}.
-\end{itemize}
-
-In addition, we introduce the following notations:
-\begin{itemize}
-\item $\mathcal{L}(\psi)$ is the set of leaf nodes of the path-tree.
-\item $b_u$ and $x_u$ refer respectively to the belief state and configuration of a node $u$.
-\item $\forall (u, o, v) \in \psi$ ennumerates of the edges of the path-tree. It refers to the incoming node $u$, the outcoming node $v$ and the observation $o$ associated with the edge. 
-\end{itemize}
-
-\subsection{State validity}
-We note $\mathcal{V}: S \times \mathbb{R}^n \rightarrow \mathbb{B}$ the function indicating if a state is valid (e.g. collision free). In general, the validity of a state depends on $s$. For example, on Figure \ref{fig:problem}, the states close to the door can be valid if the door is open but in collision if it is closed.
-By extension, the validity predicate can be applied to a node $u$, a node is valid if the robot configuration $x$ is valid for all states having a non-zero likelihood,
-\begin{equation}
-\mathcal{V}(u) \iff \mathcal{V}(s, x_u), \forall s \in \mathcal{H}\ |\ b_u(s) > 0.
-\end{equation}
-% validity function provided from outside?
-
-\subsection{State transitions validity and cost}
-A transition between two nodes is valid if it corresponds to a valid, collision-free motion. Local planning between two configurations is not part of the planning algorithm is provided by the application layer and queried to validate sampled configurations. A valid transition between a pair of nodes $u, v$ is noted by the predicate $\mathcal{V}(u, v)$. 
-
-In addition, a transition is associated with a cost $C(u, v)$ which indicates the motion cost from one tree node to another.
-
-\subsection{Goal condition}
-The goal condition is noted $G: S \times \mathbb{R}^n \rightarrow \mathbb{B}$. It is a function of both the partially observable discrete state $s$ and of the robot configuration. Having the condition depending on the discrete state can be usefull for use-cases where the robot searches for an object like in the experiment of Section \ref{experiement:mobile_manipulation}.
-By extension, the goal predicate can be applied to a node $u$, a node is terminal if its configuration $x$ is terminal for all the states $s$ that have a likelihood greater than 0,
-\begin{equation}
-G(u) \iff G(s, x_u), \forall s \in \mathcal{H}\ |\ b_u(s) > 0.
-\end{equation}
- 
-\subsection{Optimization Objective}
-% plan for each contingency
-
-The algorithm seeks to minimize the expected costs to goal. The probability to reach a node $v$ of $\psi$ can be derived from the initial belief state $b_0$ and the observation model, and we note this likelihood $p(v | \psi, b_0)$. 
-The optimal path-tree $\psi^*$ is defined by:
+In the presence of uncertainty we minimize the expectation of the motion costs, such that the partially-observable multi-modal planning problem is defined as follows.
 \begin{subequations}
 \label{eq:optimization_objective}
 \begin{align}
@@ -231,14 +183,18 @@ The optimal path-tree $\psi^*$ is defined by:
 &\text{s.t.} \notag \\
 &\forall s \in \mathcal{H}\ \exists\ l \in \mathcal{L}(\psi) \ |\ G(l), \label{eq:goal_constraint}\\
 &\mathcal{V}(u, v), \ \forall (u, v) \in \psi \label{eq:validity}, \\
-&b_v(s) = p(s | o) \times b_u(s), \forall s \in \mathcal{H}, \forall (u, o, v) \in \psi. \label{eq:belief_dynamic}
+&b_v(s) = p(s | o) \times b_u(s), \forall s \in \mathcal{H}, \forall (u, o, v) \in \psi, \label{eq:belief_dynamic}
 \end{align}
 \end{subequations}
+where the $\mathcal{L}(\psi)$ gives the leaf nodes of $\psi$, and $G(l)$ is the goal predicate, indicating whether a node fulfills the goal conditions. \ref{eq:goal_constraint} states that $\psi$ shall be complete i.e. there is a leaf satisfying the goal conditions for each possible $s$.
 
-Equation \ref{eq:cost_min} is the minimization of the expected cost. \ref{eq:goal_constraint} is the constraint stating that the path-tree should be complete i.e. it should have a leaf satisfying the goal conditions for each possible $s$. \ref{eq:validity} specifies that each edge of the tree has to be a valid motion. Finally, \ref{eq:belief_dynamic} specifies the baysian update of the belief states along the tree (see \ref{sec:observation_model}).
+The constraints \ref{eq:validity} expresses that $\psi$ shall be composed of feasible motions (e.g. collision free, feasible given the robot motion model), and $\mathcal{V}(u, v)$ is the predicate encoding the validity of the transition betwen $u$ and $v$.
+
+Finaly, the constraint \ref{eq:belief_dynamic} corresponds to the baysian updates according to the observation model. The symbol $o$ is the observation received when transitioning from $u$ to $v$. $b_v$ is the belief state of the node $v$. And $p(s|o)$ is the observation model.
 
 It is noteworthy, that the problem formulation doesn't contain any term explicitely inciting the robot to explore its environment. The balance exploration / exploitation emerges naturally as a result of the minimization of the expected motion costs.
 % difference compared to general POMDP
+
 \section{Random Optimal Path-Tree algorithm (ROPT)}
 
 \subsection{Overview}
