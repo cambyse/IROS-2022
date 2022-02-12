@@ -7,45 +7,45 @@ Warning--empty booktitle in tamp-1
 Warning--empty journal in lavalle1998rapidly
 Warning--empty publisher in levine2010information
 Warning--can't use both volume and number fields in matsakis2014rust
-You've used 16 entries,
+You've used 17 entries,
             1876 wiz_defined-function locations,
-            582 strings with 6663 characters,
-and the built_in function-call counts, 5362 in all, are:
-= -- 553
-> -- 169
+            590 strings with 6899 characters,
+and the built_in function-call counts, 5676 in all, are:
+= -- 583
+> -- 183
 < -- 0
-+ -- 62
-- -- 46
-* -- 366
-:= -- 703
-add.period$ -- 16
-call.type$ -- 16
-change.case$ -- 16
++ -- 67
+- -- 50
+* -- 390
+:= -- 748
+add.period$ -- 17
+call.type$ -- 17
+change.case$ -- 17
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 288
-empty$ -- 508
-format.name$ -- 46
-if$ -- 1333
+cite$ -- 21
+duplicate$ -- 303
+empty$ -- 536
+format.name$ -- 50
+if$ -- 1411
 int.to.chr$ -- 0
-int.to.str$ -- 16
-missing$ -- 16
-newline$ -- 51
-num.names$ -- 16
-pop$ -- 57
+int.to.str$ -- 17
+missing$ -- 17
+newline$ -- 54
+num.names$ -- 17
+pop$ -- 59
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 229
+skip$ -- 240
 stack$ -- 0
-substring$ -- 460
-swap$ -- 139
+substring$ -- 483
+swap$ -- 146
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 53
-width$ -- 18
-write$ -- 160
+while$ -- 56
+width$ -- 19
+write$ -- 170
 (There were 4 warnings)

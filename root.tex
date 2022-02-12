@@ -179,7 +179,7 @@ the graph expansion to belief state presented in \ref{section:graph_expansion_be
 \end{figure}
 
 \subsection{Optimization objective}
-We note $\psi$ a path tree, and $(u, v)$ consecutive nodes on the tree $\psi$. The motion cost between two nodes $u$ and $v$ is given by a cost function $C(u, v)$. In addition, we note $p(u | \psi, b_0)$ the probability to reach a node $v$. This probability depends on the initial belief state $b_0$ and the observation model. 
+We note $\psi$ a path-tree, and $(u, v)$ consecutive nodes on the tree $\psi$. The motion cost between two nodes $u$ and $v$ is given by a cost function $C(u, v)$. In addition, we note $p(u | \psi, b_0)$ the probability to reach a node $v$. This probability depends on the initial belief state $b_0$ and the observation model. 
 
 In the presence of uncertainty we minimize the expectation of the motion costs, such that the partially-observable multi-modal planning problem is defined as follows.
 \begin{subequations}
@@ -454,11 +454,11 @@ The observation model simulates that a sensor is placed on the robot gripper and
 
 Planning is performed in joint space with 9 degrees of freedom (2 for the base, and 7 for the robot arm).
 
-Figure \ref{fig:example_2_view_point} shows the trajectory of the robot base along the path tree. There are two observation branching points corresponding to the observations of the shelves 0 an 1.
+Figure \ref{fig:example_2_view_point} shows the trajectory of the robot base along the path-tree. There are two observation branching points corresponding to the observations of the shelves 0 an 1.
 
 \begin{figure}[!htb]
  \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/example_1_path_tree.png}}
- \caption{Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.}
+ \caption{Path-tree: The planned path-tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.}
  \label{fig:example_1_path_tree}
 \end{figure}
 
@@ -502,9 +502,9 @@ example-2  & & & & &\\
 \subsection{Comparison to baseline} \label{experiment:baseline comparison}
 We compare PTO to a Task and Motion Planning (TAMP) approach, where the planning is hierarchical: it interleaves a symbolic search defining high level plans, and a motion planning phase computing the corresponding motions. The comparison is performed on variations of the shelf domain (see Figure \ref{fig:baseline_comparison}), and where we plan for the  2D base position only. The number of shelves is varied to compare the scalability.
 
-The high level search is performed using the Branch and Bound algorithm. It explores the space of the possible sequences for visiting all the shelves. The nodes of the search correspond to shelves. The motion planner is queried when a node is created. For each node/shelf, 2 paths are planned using RRT$^{*}$: the path to an observation point, and the path to pick-up the object (to be executed if the object is actually detected). A path-tree is obtained by gathering the path pieces from the root node to a leaf of the search tree. 
+The high level search is performed using the Branch and Bound algorithm \cite{MORRISON201679}. It explores the space of the possible sequences for visiting all the shelves. The nodes of the search correspond to shelves. The motion planner is queried when a node is created. For each node/shelf, 2 paths are planned using RRT$^{*}$: the path to an observation point, and the path to pick-up the object (to be executed if the object is actually detected). A path-tree is obtained by gathering the path pieces from the root node to a leaf of the search tree. 
 
-The branch and bound tree seach is performed in a Depth-First fashion, which leads to a quick first solution path tree. The best solution path-tree found so far is an upper bound of the cost and allows the pruning of a majority of the search tree.
+The branch and bound tree seach is performed in a depth-first fashion, which leads to a quick first solution path-tree. The best solution path-tree found so far is an upper bound of the cost and allows the pruning of a majority of the search tree.
 
 %The high level planning is performed as a Branch and Bound tree search. where the nodes correspond to shelves. The corresponding motions are computed when exanding the tree. For each shelf, 2 paths are planned using RRT$^{*}$: the path to an observation point, and the path to pick-up the object (to be executed if the object is actually detected). A path-tree is obtained by gathering the path pieces planned from the root to a leaf node.
 
@@ -581,7 +581,7 @@ We report on Figure \ref{fig:costs_and_runtime} on the expected cost of the resu
    \label{fig:costs_and_runtime}
 \end{figure}
 
-First, We observe that the PTO consistently leads to path-tree costs that are lower than the piece-wise planning with RRT$^{*}$. This can be understood easily, the decomposition into piecewise motions leads to path pieces that are optimal w.r.t the subproblem of reaching one shelf, but taken together, al lthe path-pieces don't result in an optimal path-tree. On the other hand, PTO searches for a globally optimal path-tree. It is visible on Figure \ref{fig:baseline_comparison}, the RRT$^{*}$ path tree greedily moves towards the next shelf to explore, whereas PTO tends to take a less direct path to the observation point, but which overall leads to a shorter path-tree. 
+First, We observe that the PTO consistently leads to path-tree costs that are lower than the piece-wise planning with RRT$^{*}$. This can be understood easily, the decomposition into piecewise motions leads to path pieces that are optimal w.r.t the subproblem of reaching one shelf, but taken together, al lthe path-pieces don't result in an optimal path-tree. On the other hand, PTO searches for a globally optimal path-tree. It is visible on Figure \ref{fig:baseline_comparison}, the RRT$^{*}$ path-tree greedily moves towards the next shelf to explore, whereas PTO tends to take a less direct path to the observation point, but which overall leads to a shorter path-tree. 
 
 Second, PTO scales better w.r.t. the number of shelves (see \ref{fig:costs_and_runtime}. Although planning times are comparable for the variation with 2 shelves, the difference between PTO and RRT becomes larger and larger when the number of shelves increases. The main reason for this is that PTO is more sampling efficient: The random graph (see \ref{section:rapidly-exploring-random-graph}) which involves state and transition geometric validity checks is constructed just once. On the other hand, Branch and Bound + RRT$^{*}$ approach is more sampling intensive since a new random tree is resampled from scratch for the planning of each path-piece.
 

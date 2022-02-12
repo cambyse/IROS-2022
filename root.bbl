@@ -82,4 +82,10 @@ D.~Coleman, I.~Sucan, S.~Chitta, and N.~Correll, ``Reducing the barrier to
   entry of complex robotic software: a moveit! case study,'' {\em arXiv
   preprint arXiv:1404.3785}, 2014.
 
+\bibitem{MORRISON201679}
+D.~R. Morrison, S.~H. Jacobson, J.~J. Sauppe, and E.~C. Sewell,
+  ``Branch-and-bound algorithms: A survey of recent advances in searching,
+  branching, and pruning,'' {\em Discrete Optimization}, vol.~19, pp.~79--102,
+  2016.
+
 \end{thebibliography}
