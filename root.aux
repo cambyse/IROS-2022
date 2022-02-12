@@ -38,14 +38,15 @@
 \@writefile{toc}{\contentsline {section}{\numberline {I}INTRODUCTION}{1}{section.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}RELATED WORK}{1}{section.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {III}PROBLEM FORMULATION}{2}{section.3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity. }}{2}{figure.1}}
-\newlabel{fig:problem}{{1}{2}{Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity. \relax }}{2}{figure.caption.1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:problem}{{1}{2}{Example of planning problem: The robot must reach the goal area. The state of a door (open vs. closed) is only observable in its vicinity. \relax }{figure.caption.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {III-A}State representation}{2}{subsection.3.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment.}}{2}{figure.2}}
-\newlabel{fig:multiple_worlds}{{2}{2}{Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment.\relax }}{2}{figure.caption.2}}
+\newlabel{fig:multiple_worlds}{{2}{2}{Partially observable discrete state: With 2 partially observable doors, there are 4 possible states of the environment.\relax }{figure.caption.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Path-tree}{2}{subsection.3.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed).}}{2}{figure.3}}
-\newlabel{fig:path_tree}{{3}{2}{Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed)}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed).\relax }}{2}{figure.caption.3}}
+\newlabel{fig:path_tree}{{3}{2}{Example of path-tree: The path-tree branches where an observation leads to a belief state update. There are 2 planned contingencies for each branching corresponding to the 2 cases (door open or closed).\relax }{figure.caption.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Optimization objective}{2}{subsection.3.3}}
 \newlabel{eq:optimization_objective}{{1}{2}{Optimization objective}{equation.3.1}{}}
 \newlabel{eq:cost_min}{{1a}{2}{Optimization objective}{equation.3.1}{}}
@@ -54,31 +55,29 @@
 \newlabel{eq:belief_dynamic}{{1d}{2}{Optimization objective}{equation.3.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Random Optimal Path-Tree algorithm (ROPT)}{3}{section.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Overview}{3}{subsection.4.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces ROPT Algorithm overview. It contains three main steps corresponding to the algorithms described in the sections \ref  {section:rapidly-exploring-random-graph}, \ref  {section:rapidly-exploring-random-graph} and \ref  {section:policy-extraction}.}}{3}{figure.4}}
-\newlabel{algorithm_overview}{{4}{3}{ROPT Algorithm overview. It contains three main steps corresponding to the algorithms described in the sections \ref {section:rapidly-exploring-random-graph}, \ref {section:rapidly-exploring-random-graph} and \ref {section:policy-extraction}}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces ROPT Algorithm overview. It contains three main steps corresponding to the algorithms described in the sections \ref  {section:rapidly-exploring-random-graph}, \ref  {section:rapidly-exploring-random-graph} and \ref  {section:policy-extraction}.\relax }}{3}{figure.caption.4}}
+\newlabel{algorithm_overview}{{4}{3}{ROPT Algorithm overview. It contains three main steps corresponding to the algorithms described in the sections \ref {section:rapidly-exploring-random-graph}, \ref {section:rapidly-exploring-random-graph} and \ref {section:policy-extraction}.\relax }{figure.caption.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Interface between the algorithm and the application layer}{3}{subsection.4.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Rapidly-exploring Random Graph}{3}{subsection.4.3}}
 \newlabel{section:rapidly-exploring-random-graph}{{IV-C}{3}{Rapidly-exploring Random Graph}{subsection.4.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Random Graph expansion: For a new sample \textit  {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit  {w}, see \textit  {a)} and \textit  {c}).}}{3}{figure.5}}
-\newlabel{fig:expansion}{{5}{3}{Random Graph expansion: For a new sample \textit {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit {w}, see \textit {a)} and \textit {c})}{figure.5}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rapidly-exploring Random Graph}}{4}{algorithm.1}}
-\newlabel{alg:rrg}{{1}{4}{Rapidly-exploring Random Graph}{algorithm.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Random Graph expansion: For a new sample \textit  {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit  {w}, see \textit  {a)} and \textit  {c}).\relax }}{3}{figure.caption.5}}
+\newlabel{fig:expansion}{{5}{3}{Random Graph expansion: For a new sample \textit {a)}, the new state is computed steering from the closest compatible node of the graph. The closest compatible node depends on the sample world \textit {w}, see \textit {a)} and \textit {c}).\relax }{figure.caption.5}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rapidly-exploring Random Graph\relax }}{4}{algorithm.1}}
+\newlabel{alg:rrg}{{1}{4}{Rapidly-exploring Random Graph\relax }{algorithm.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Graph expansion to belief space}{4}{subsection.4.4}}
 \newlabel{section:graph_expansion_belief_space}{{IV-D}{4}{Graph expansion to belief space}{subsection.4.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Random Graph expanded to belief state: The belief states are represented as \textit  {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).}}{4}{figure.6}}
-\newlabel{fig:belief_layers}{{6}{4}{Random Graph expanded to belief state: The belief states are represented as \textit {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges)}{figure.6}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Creation of the belief graph}}{4}{algorithm.2}}
-\newlabel{alg:belief}{{2}{4}{Graph expansion to belief space}{algorithm.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-E}Policy extraction}{4}{subsection.4.5}}
-\newlabel{section:policy-extraction}{{IV-E}{4}{Policy extraction}{subsection.4.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Random Graph expanded to belief state: The belief states are represented as \textit  {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).\relax }}{4}{figure.caption.6}}
+\newlabel{fig:belief_layers}{{6}{4}{Random Graph expanded to belief state: The belief states are represented as \textit {layers} of the belief graph. The nodes within the observation range potentially lead to a belief state update and therefore have edges transitioning to other belief states (thick vertical edges).\relax }{figure.caption.6}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Creation of the belief graph\relax }}{4}{algorithm.2}}
+\newlabel{alg:belief}{{2}{4}{Creation of the belief graph\relax }{algorithm.2}{}}
 \citation{Sniedovich2006DijkstrasAR}
 \citation{geraerts2007creating}
 \citation{matsakis2014rust}
 \citation{coleman2014reducing}
-\bibdata{references}
-\bibcite{tamp-1}{1}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Computation of the expected costs to goal}}{5}{algorithm.3}}
-\newlabel{alg:expected_costs}{{3}{5}{Policy extraction}{algorithm.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-E}Policy extraction}{5}{subsection.4.5}}
+\newlabel{section:policy-extraction}{{IV-E}{5}{Policy extraction}{subsection.4.5}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Computation of the expected costs to goal\relax }}{5}{algorithm.3}}
+\newlabel{alg:expected_costs}{{3}{5}{Computation of the expected costs to goal\relax }{algorithm.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-F}Path-tree refinement}{5}{subsection.4.6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-G}Completeness and optimality}{5}{subsection.4.7}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}EXPERIMENTS}{5}{section.5}}
@@ -86,8 +85,22 @@
 \newlabel{experiment:navigation}{{V-A}{5}{Mobile robot navigation}{subsection.5.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Robot arm object fetching}{5}{subsection.5.2}}
 \newlabel{experiment:mobile_manipulation}{{V-B}{5}{Robot arm object fetching}{subsection.5.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves.}}{5}{figure.7}}
-\newlabel{fig:arm_example_1}{{7}{5}{Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves.\relax }}{5}{figure.caption.7}}
+\newlabel{fig:arm_example_1}{{7}{5}{Example 1: The robot has to pick the green block. The block location is unknown, it maybe on each one of the three shelves.\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Example 2: The block might be on two different shelves. The opening between the two doors potentially allows the robot to observe the shelves without entering the rooms.\relax }}{6}{figure.caption.8}}
+\newlabel{fig:arm_example_2}{{8}{6}{Example 2: The block might be on two different shelves. The opening between the two doors potentially allows the robot to observe the shelves without entering the rooms.\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.\relax }}{6}{figure.caption.9}}
+\newlabel{fig:example_1_path_tree}{{9}{6}{Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magenta path.\relax }}{6}{figure.caption.10}}
+\newlabel{fig:example_2_view_point}{{10}{6}{Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magenta path.\relax }{figure.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Planning times:.\relax }}{6}{table.caption.11}}
+\newlabel{tab:planning_times}{{I}{6}{Planning times:.\relax }{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Comparison to baseline}{6}{subsection.5.3}}
+\newlabel{experiment:baseline comparison}{{V-C}{6}{Comparison to baseline}{subsection.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Comparison of PTO to RRT$^{*}$: The green path-tree (PTO) has lower expected cost than the orange path-tree planned piecewise using RRT$^{*}$.\relax }}{6}{figure.caption.12}}
+\newlabel{fig:baseline_comparison}{{11}{6}{Comparison of PTO to RRT$^{*}$: The green path-tree (PTO) has lower expected cost than the orange path-tree planned piecewise using RRT$^{*}$.\relax }{figure.caption.12}{}}
+\bibdata{references}
+\bibcite{tamp-1}{1}
 \bibcite{control-tree-1}{2}
 \bibcite{lavalle1998rapidly}{3}
 \bibcite{kavraki1996probabilistic}{4}
@@ -104,13 +117,11 @@
 \bibcite{matsakis2014rust}{15}
 \bibcite{coleman2014reducing}{16}
 \bibstyle{ieeetr}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Example 2: The block might be on two different shelves. The opening between the two doors potentially allows the robot to observe the shelves without entering the rooms.}}{6}{figure.8}}
-\newlabel{fig:arm_example_2}{{8}{6}{Example 2: The block might be on two different shelves. The opening between the two doors potentially allows the robot to observe the shelves without entering the rooms}{figure.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path.}}{6}{figure.9}}
-\newlabel{fig:example_1_path_tree}{{9}{6}{Path-tree: The planned path tree first moves towards the shelf\_0 to reach the first viewpoint. If the object is on the shelf\_0, the green path is executed. Otherwise the robot moves towards the second viewpoint. Based on the observation, the robot executes either the magenta or the orange path}{figure.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magenta path.}}{6}{figure.10}}
-\newlabel{fig:example_2_view_point}{{10}{6}{Observation branching point: A first common branch of the path-tree leads the robot to an observation point through the opening. Based on the received observation, the robot will either execute the yellow or the magenta path}{figure.10}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}CONCLUSIONS AND FUTURE WORK}{6}{section.6}}
-\@writefile{toc}{\contentsline {section}{References}{6}{section*.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Planning times:.}}{6}{table.1}}
-\newlabel{tab:table_obstacle_avoidance}{{I}{6}{Planning times:}{table.1}{}}
+\newlabel{fig:y equals x}{{12a}{7}{Path costs (m)\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:y equals x}{{a}{7}{Path costs (m)\relax }{figure.caption.13}{}}
+\newlabel{fig:y equals x}{{12b}{7}{Planning time (s)\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:y equals x}{{b}{7}{Planning time (s)\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Comparison of path-tree costs and planning times. PTO provides path-trees with lower costs. Planning time also scales better w.r.t. the number of shelves. \relax }}{7}{figure.caption.13}}
+\newlabel{fig:costs_and_runtime}{{12}{7}{Comparison of path-tree costs and planning times. PTO provides path-trees with lower costs. Planning time also scales better w.r.t. the number of shelves. \relax }{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}CONCLUSIONS AND FUTURE WORK}{7}{section.6}}
+\@writefile{toc}{\contentsline {section}{References}{7}{section*.15}}

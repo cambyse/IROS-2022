@@ -18,6 +18,10 @@
 \usepackage{makecell}
 \usepackage{float}
 \usepackage{tikz}
+\usepackage{pgfplots} 
+\usepackage{caption}
+\usepackage{subcaption}
+\usetikzlibrary{patterns}
 \usetikzlibrary{positioning,shapes.misc}
 \tikzset{
     myboxrectangle/.style={rectangle,draw=black,align=center, minimum width=2cm, minimum height=0.8cm},
@@ -490,11 +494,104 @@ example-2  & & & & &\\
 \end{tabular}
 \end{center}
 \caption{Planning times:.}
-\label{tab:table_obstacle_avoidance}
+\label{tab:planning_times}
 \end{table}
 
 % variation 3 locations vs 9 locations or tables?
 
+\subsection{Comparison to baseline} \label{experiment:baseline comparison}
+We compare PTO to a Task and Motion Planning (TAMP) approach, where the planning is hierarchical: it interleaves a symbolic search defining high level plans, and a motion planning phase computing the corresponding motions. The comparison is performed on variations of the shelf domain (see Figure \ref{fig:baseline_comparison}), and where we plan for the  2D base position only. The number of shelves is varied to compare the scalability.
+
+The high level search is performed using the Branch and Bound algorithm. It explores the space of the possible sequences for visiting all the shelves. The nodes of the search correspond to shelves. The motion planner is queried when a node is created. For each node/shelf, 2 paths are planned using RRT$^{*}$: the path to an observation point, and the path to pick-up the object (to be executed if the object is actually detected). A path-tree is obtained by gathering the path pieces from the root node to a leaf of the search tree. 
+
+The branch and bound tree seach is performed in a Depth-First fashion, which leads to a quick first solution path tree. The best solution path-tree found so far is an upper bound of the cost and allows the pruning of a majority of the search tree.
+
+%The high level planning is performed as a Branch and Bound tree search. where the nodes correspond to shelves. The corresponding motions are computed when exanding the tree. For each shelf, 2 paths are planned using RRT$^{*}$: the path to an observation point, and the path to pick-up the object (to be executed if the object is actually detected). A path-tree is obtained by gathering the path pieces planned from the root to a leaf node.
+
+We report on Figure \ref{fig:costs_and_runtime} on the expected cost of the resulting path-trees, as well as on the overall planning time.
+
+%The high-level plans are ordered sequences of shelves to inspect, they are obtained in a breadth-first fashion. For each shelf, 2 paths are planned using RRT$^{*}$: the path to the shelf itself (to pick the object if it is there), and the path towards the next observation point (if the object is not there). The path-tree is obtained by gathering the path pieces planned separately.%
+
+%Branch and bound, depth first, upper bound
+%no heuristic
+%100 iterations
+%advantges: optimality, faster execution times, lighweight setup. No need to bring domain knowledge to set up an action space for a high level search.
+
+
+\begin{figure}[!htb]
+ \center{\includegraphics[width=0.45\textwidth]{drawings/2_arm/baseline_comparison.png}}
+ \caption{Comparison of PTO to RRT$^{*}$: The green path-tree (PTO) has lower expected cost than the orange path-tree planned piecewise using RRT$^{*}$.}
+ \label{fig:baseline_comparison}
+\end{figure}
+
+
+\pgfplotsset{width=5cm, height=7cm}
+
+\begin{figure}[h]  
+\centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+	 \begin{axis} [
+	    ybar = .05cm,
+    	bar width = 7pt,
+    	ymin = 0,
+    	ymax = 3,
+    	xtick = data,
+    	enlarge y limits = {value = .25, upper},
+    	enlarge x limits = {abs = .8}
+		]
+		\addplot [green!20!black,fill=green!80!white] coordinates {
+		(2, 1.7529471182990233) (4, 2.2212974330517827) (6, 2.3911496782081954) (8, 2.360321441477037)
+		};
+		\addplot [orange!20!black,fill=orange!80!white] coordinates {
+		(2, 1.8569080235157531) (4, 2.3748431227440063) (6, 2.6112924196096783) (8, 2.5971396786963075)
+		};
+		\legend {PTO, RRT$^{*}$}; 
+		\end{axis}
+	\end{tikzpicture}
+    \caption{Path costs (m)}
+    \label{fig:y equals x}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+	 \begin{axis} [
+	    ybar = .05cm,
+	    ymin = 0.05,
+    	bar width = 7pt,
+    	ymode=log,
+    	log origin=infty,
+    	xtick = data,
+    	enlarge y limits = {value = .25, upper},
+    	enlarge x limits = {abs = .8},
+    	legend pos=north west
+		]
+		\addplot [green!20!black,fill=green!80!white] coordinates {
+		(2, 0.0838456953) (4, 0.3447605707) (6, 1.3742766512) (8, 7.585573182200001)
+		};
+		\addplot [orange!20!black,fill=orange!80!white] coordinates {
+		(2, 0.0763110857) (4, 0.8065830762000001) (6, 11.0703240974) (8, 107.3652537214)
+		};
+		\legend {PTO, RRT$^{*}$}; 
+		\end{axis}
+	 \end{tikzpicture}
+     \caption{Planning time (s)}
+     \label{fig:y equals x}
+   \end{subfigure}
+   \caption{Comparison of path-tree costs and planning times. PTO provides path-trees with lower costs. Planning time also scales better w.r.t. the number of shelves. }
+   \label{fig:costs_and_runtime}
+\end{figure}
+
+First, We observe that the PTO consistently leads to path-tree costs that are lower than the piece-wise planning with RRT$^{*}$. This can be understood easily, the decomposition into piecewise motions leads to path pieces that are optimal w.r.t the subproblem of reaching one shelf, but taken together, al lthe path-pieces don't result in an optimal path-tree. On the other hand, PTO searches for a globally optimal path-tree. It is visible on Figure \ref{fig:baseline_comparison}, the RRT$^{*}$ path tree greedily moves towards the next shelf to explore, whereas PTO tends to take a less direct path to the observation point, but which overall leads to a shorter path-tree. 
+
+Second, PTO scales better w.r.t. the number of shelves (see \ref{fig:costs_and_runtime}. Although planning times are comparable for the variation with 2 shelves, the difference between PTO and RRT becomes larger and larger when the number of shelves increases. The main reason for this is that PTO is more sampling efficient: The random graph (see \ref{section:rapidly-exploring-random-graph}) which involves state and transition geometric validity checks is constructed just once. On the other hand, Branch and Bound + RRT$^{*}$ approach is more sampling intensive since a new random tree is resampled from scratch for the planning of each path-piece.
+
+It is also worth noting that, in this particular example, PRM could be used to improve the runtime for the baseline. On the other hand, this would not be a general solution. Indeed, the state validity depends, in general, on the state $s$ (see \ref{experiment:navigation}), such that multiple roadmaps would be needed.
+
+In addition, in this example, both algorithms PTO and the Branch and Bound search could be made faster by using heuristics as lower bound of the path costs (e.g. euclidean distance). We chose, however, to compare here the general approaches, without optimization tailored to the particular example.  
+% Note about PRM
+% simple example
+% RRT TAMP Task and Motion Planning
+% ni usage of heuristics
 \section{CONCLUSIONS AND FUTURE WORK}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
